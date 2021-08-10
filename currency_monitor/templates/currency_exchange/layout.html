@@ -26,6 +26,15 @@
     <button class="btn btn-danger navbar-btn">Button</button>
   </div>
 </nav>
+ <div id="messages">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
 {% block content %}
 {% endblock %}
 </body>
