@@ -19,13 +19,15 @@
       <a class="navbar-brand" href={% url 'home' %}>CurrencyMonitor</a>
     </div>
     <ul class="nav navbar-nav">
-      <li class="active"><a href="#">Home</a></li>
-      <li><a href="#">Link</a></li>
-      <li><a href="#">Link</a></li>
+      <li class="active"><a href="{% url 'home' %}">Home</a></li>
+        {% for currency in currencies %}
+      <li><a href={%  url "currency_details" currency.slug %}>{{ currency.code }}</a></li>
+        {% endfor %}
+
     </ul>
-    <button class="btn btn-danger navbar-btn">Button</button>
   </div>
 </nav>
+
  <div id="messages">
             {% if messages %}
                 {% for message in messages %}

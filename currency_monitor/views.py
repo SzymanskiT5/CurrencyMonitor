@@ -13,7 +13,7 @@ from .forms import ExchangeForm
 from djangoProject.settings import NBP_COURSE_URL
 from .models import Currency
 from .serializers import CurrencyExchangeSerializer
-
+from .vizualization import get_plot
 
 class HomeView(FormView):
     model = Currency
@@ -108,11 +108,16 @@ class CurrencyView(DetailView):
         if serializer.is_valid():
             x_range = [objects['effectiveDate'] for objects in serializer.data['rates']]
             y_range = [objects['mid'] for objects in serializer.data['rates']]
-            plt.plot(x_range, y_range)
-            plt.suptitle(f'{currency.code} course')
-            plt.ylabel('Value')
-            plt.xlabel('Date')
-            plt.show()
+
+            # y_range = y_range(round())
+            # # plt.plot(x_range, y_range)
+            # plt.suptitle(f'{currency.code} course')
+            # plt.ylabel('Value')
+            # plt.xlabel('Date')
+            # plt.show()
+            plot = get_plot(x_range, y_range, currency.code)
+            return render(self.request, 'currency_exchange/currency_status.html', {"plot":plot})
+
 
 
 
