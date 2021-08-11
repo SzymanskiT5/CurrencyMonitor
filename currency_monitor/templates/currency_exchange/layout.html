@@ -1,34 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
-{% load static %}
+
 <head>
+{% load static %}
     <meta charset="UTF-8">
     <title>CurrencyMonitor</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+{#    <meta name="viewport" content="width=device-width, initial-scale=1">#}
+{#    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">#}
+    <link rel="stylesheet" href="{% static 'currency_monitor/css/navbar.css' %}">
+{##}
+{#    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>#}
+{#   <script src="{% static 'currency_monitor/css/navbar.css' %}"></script>#}
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+{##}
+{#    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>#}
 
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
-
+{% block head %}
+{% endblock %}
 </head>
 
 <body>
-<nav class="navbar navbar-inverse">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <a class="navbar-brand" href={% url 'home' %}>CurrencyMonitor</a>
-        </div>
-        <ul class="nav navbar-nav">
-            <li class="active"><a href="{% url 'home' %}">Home</a></li>
-            {% for currency in currencies %}
-                <li><a href={% url "currency_details" currency.slug %}>{{ currency.code }}</a></li>
-            {% endfor %}
 
-        </ul>
-    </div>
-</nav>
+ <div class="area"></div><nav class="main-menu">
+  <ul>
+                <li>
+                    <a href="{% url 'home' %}">
+                        <i class="fa fa-home fa-2x"></i>
+                        <span class="nav-text">
+                           Home
+                        </span>
+                    </a>
+                </li>
+            </ul>
+ <ul>
+                <li>
+                    <a href="{% url 'calculator' %}">
+                        <i class="fa fa-laptop fa-2x"></i>
+                        <span class="nav-text">
+                           Calculator
+                        </span>
+                    </a>
+                </li>
+            </ul>
+     {% for currency in currencies %}
+            <ul>
+                <li>
+                    <a href="{% url 'currency_details' currency.slug%}">
+                        <i class="fa fa-bar-chart-o fa-2x"></i>
+                        <span class="nav-text">
+                           {{ currency.code }}
+                        </span>
+                    </a>
+                </li>
+            </ul>
+
+
+{% endfor %}
+        </nav>
+
 
 <div id="messages">
     {% if messages %}
@@ -39,7 +68,9 @@
         {% endfor %}
     {% endif %}
 </div>
+
 {% block content %}
 {% endblock %}
+
 </body>
 </html>

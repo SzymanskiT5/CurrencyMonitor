@@ -1,30 +1,9 @@
 {% extends 'currency_exchange/layout.html' %}
-{% load crispy_forms_tags %}
+
+{% load static %}
+
 {% block content %}
-     <form method="post">
-    {% csrf_token %}
-    <div class="form-row">
-      <div class="form-group col-md-2 mb-0">
-        {{ form.currency1_amount|as_crispy_field }}
-      </div>
-      <div class="form-group col-md-2 mb-0">
-        {{ form.currency1_code|as_crispy_field }}
-      </div>
-    </div>
-          <div class="form-row">
-              <div class="form-group col-md-2 mb-0">
-        {{ form.currency2_amount|as_crispy_field }}
-      </div>
-
-          </div>
-         <div class="form-group col-md-2 mb-0">
-        {{ form.currency2_code|as_crispy_field }}
-      </div>
-
-    <div class="col-md-10 mb-0 text-center">
-    <button type="submit" class="btn btn-primary">Calculate</button>
-     </div>
-  </form>
-
+    <h1 style="text-align:center"> Welcome to CurrencyMonitor!</h1>
+    <p style="text-align:center">It is app to calculate currencies values. It also contains plots, which monitors a course to the zloty. Data comes from NBP API</p>
 
 {% endblock %}

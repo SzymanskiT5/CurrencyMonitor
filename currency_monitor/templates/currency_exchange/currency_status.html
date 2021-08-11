@@ -1,12 +1,12 @@
 {% extends 'currency_exchange/layout.html' %}
+{% block head %}
+{% load static %}
+    <link rel="stylesheet" href="{% static 'currency_monitor/css/plot.css' %}">
+{% endblock %}
+
 {% block content %}
-
     {% if plot %}
-
-
-        <img src="data:image/png;base64, {{ plot|safe }}">
-
+        <img src="data:image/png;base64, {{ plot|safe }}" class="center" alt="plot">
     {% endif %}
-
 
 {% endblock %}

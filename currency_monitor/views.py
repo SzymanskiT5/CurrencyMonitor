@@ -15,10 +15,10 @@ from .serializers import CurrencyExchangeSerializer
 from .vizualization import get_plot
 
 
-class HomeView(FormView):
+class CalculatorView(FormView):
     model = Currency
     form_class = ExchangeForm
-    template_name = 'currency_exchange/home.html'
+    template_name = 'currency_exchange/calculator.html'
     context_object_name = "currencies"
 
 
@@ -32,11 +32,11 @@ class HomeView(FormView):
     def set_form_and_result(self, result):
         result = round(result, 2)
         form = ExchangeForm(self.request.POST, initial={'currency2_amount': result})
-        return render(self.request, 'currency_exchange/home.html', {"form": form})
+        return render(self.request, 'currency_exchange/calculator.html', {"form": form})
 
     def set_serializing_error(self):
         messages.info(self.request, "Something went wrong")
-        return render(self.request, 'currency_exchange/home.html', {"form": self.form_class()})
+        return render(self.request, 'currency_exchange/calculator.html', {"form": self.form_class()})
 
     def change_pln_to_currency(self, currency2_code, currency1_amount):
         response = requests.get(NBP_COURSE_URL + currency2_code, params={"format": 'json'}).content
@@ -113,4 +113,7 @@ class CurrencyView(DetailView):
             return render(self.request, 'currency_exchange/currency_status.html', {"plot": plot})
 
         messages.info(self.request, "Something went wrong")
-        return render(self.request, 'currency_exchange/home.html')
+        return render(self.request, 'currency_exchange/calculator.html')
+
+def home(request) -> HttpResponse:
+    return render(request, "currency_exchange/home.html", {"title": "DjangoCatering"})
