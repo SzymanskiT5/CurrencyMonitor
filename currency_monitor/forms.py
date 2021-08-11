@@ -19,12 +19,12 @@ class ExchangeForm(forms.Form):
     currency2_amount =forms.FloatField(label='Calculated Amount',min_value=0.5, required=False, disabled=True)
     currency2_code = forms.ChoiceField(label='Currency to Calculate', choices=currency_codes)
 
-    def clean(self):
-        super().clean()
-        currency1_code = self.cleaned_data.get('currency1_code')
-        currency2_code = self.cleaned_data.get('currency2_code')
-        if currency1_code == currency2_code:
-            self._errors["currency2_code"] = self.error_class(["Please choose other code"])
-        return self.cleaned_data
+    # def clean(self):
+    #     super().clean()
+    #     currency1_code = self.cleaned_data.get('currency1_code')
+    #     currency2_code = self.cleaned_data.get('currency2_code')
+    #     if currency1_code == currency2_code:
+    #         self._errors["currency2_code"] = self.error_class(["Please choose other code"])
+    #     return self.cleaned_data
 
 
