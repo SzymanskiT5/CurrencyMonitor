@@ -1,4 +1,5 @@
 {% extends 'currency_exchange/layout.html' %}
+{% load crispy_forms_filters %}
 {% block head %}
 {% load static %}
     <link rel="stylesheet" href="{% static 'currency_monitor/css/plot.css' %}">
@@ -8,5 +9,16 @@
     {% if plot %}
         <img src="data:image/png;base64, {{ plot|safe }}" class="center" alt="plot">
     {% endif %}
+
+     <form method="post">
+    {% csrf_token %}
+         {{ form|crispy }}
+
+     <div class="col-md-10 mb-0 text-center">
+    <button type="submit" class="btn-outline-info">Calculate</button>
+     </div>
+     </form>
+
+
 
 {% endblock %}

@@ -3,32 +3,13 @@
 {% block head %}
 {% load static %}
     <link rel="stylesheet" href="{% static 'currency_monitor/css/plot.css' %}">
+      <script src="{% static "currency_monitor/js/currency_exchange.js" %}"></script>
 {% endblock %}
 {% block content %}
      <form method="post">
     {% csrf_token %}
          {{ form|crispy }}
-{#    <div class="form-row">#}
-{#      <div class="form-group col-md-2 mb-0">#}
-{#        {{ form.currency1_amount|as_crispy_field }}#}
-{#      </div>#}
-{#      <div class="form-group col-md-2 mb-0">#}
-{#        {{ form.currency1_code|as_crispy_field }}#}
-{#      </div>#}
-{#    </div>#}
-{#          <div class="form-row">#}
-{#              <div class="form-group col-md-2 mb-0">#}
-{#        {{ form.currency2_amount|as_crispy_field }}#}
-{#      </div>#}
-{##}
-{#          </div>#}
-{#         <div class="form-group col-md-2 mb-0">#}
-{#        {{ form.currency2_code|as_crispy_field }}#}
-{#      </div>#}
 
-    <div class="col-md-10 mb-0 text-center">
-    <button type="submit" class="btn-outline-info">Calculate</button>
-     </div>
   </form>
 
 

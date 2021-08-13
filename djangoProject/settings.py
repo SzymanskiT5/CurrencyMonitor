@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'currency_monitor.apps.CurrencyExchangeConfig',
+    'REST.apps.RestConfig',
     'rest_framework',
     'crispy_forms',
 ]

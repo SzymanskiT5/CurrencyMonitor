@@ -1,3 +1,5 @@
-Django~=3.2.6
-requests~=2.22.0
-djangorestframework~=3.12.4
+Django
+requests
+djangorestframework
+django-crispy-forms
+matplotlib
