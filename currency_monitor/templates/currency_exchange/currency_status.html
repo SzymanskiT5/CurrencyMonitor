@@ -3,20 +3,20 @@
 {% block head %}
 {% load static %}
     <link rel="stylesheet" href="{% static 'currency_monitor/css/plot.css' %}">
+          <script src="{% static "currency_monitor/js/plot.js" %}"></script>
+
 {% endblock %}
 
 {% block content %}
     {% if plot %}
-        <img src="data:image/png;base64, {{ plot|safe }}" class="center" alt="plot">
+        <img src="data:image/png;base64, {{ plot|safe }}" class="center" alt="plot" id="plot">
     {% endif %}
 
      <form method="post">
     {% csrf_token %}
          {{ form|crispy }}
 
-     <div class="col-md-10 mb-0 text-center">
-    <button type="submit" class="btn-outline-info">Calculate</button>
-     </div>
+
      </form>
 
 

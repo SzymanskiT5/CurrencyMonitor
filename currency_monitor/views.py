@@ -65,21 +65,8 @@ class CurrencyView(DetailView):
         if serializer.is_valid():
             plot = self.get_values_to_create_plot(serializer, currency)
             return render(self.request, 'currency_exchange/currency_status.html', {"plot": plot, "form":self.form_class()})
-
         return self.set_serializing_error()
 
-    def post(self, *args, **kwargs):
-
-        currency = self.get_object()
-        points = self.request.POST.get('points')
-        response = self.get_response_from_API(currency, points)
-        serializer = self.create_serializer_object(response)
-        if serializer.is_valid():
-            plot = self.get_values_to_create_plot(serializer, currency)
-            return render(self.request, 'currency_exchange/currency_status.html',
-                          {"plot": plot, "form": self.form_class(self.request.POST)})
-
-        return self.set_serializing_error()
 
 
 

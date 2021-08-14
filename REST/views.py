@@ -3,19 +3,20 @@ import requests
 from rest_framework.parsers import JSONParser
 from rest_framework.response import Response
 from rest_framework.views import APIView
-
+from currency_monitor.vizualization import get_plot
 from .serializers import CurrencyExchangeSerializer, NBPResponseSerializer
 from djangoProject.settings import NBP_COURSE_URL
 
 
+def process_data_from_response(response):
+        stream = io.BytesIO(response)
+        data = JSONParser().parse(stream)
+        return data
 
 
 class CalculateViewAPI(APIView):
 
-    def process_data_from_response(self, response):
-        stream = io.BytesIO(response)
-        data = JSONParser().parse(stream)
-        return data
+
 
     def set_response(self, value):
         value = round(value, 2)
@@ -33,7 +34,7 @@ class CalculateViewAPI(APIView):
 
     def change_pln_to_currency(self, currency2_code, currency1_amount):
         response = requests.get(NBP_COURSE_URL + currency2_code, params={"format": 'json'}).content
-        data = self.process_data_from_response(response)
+        data = process_data_from_response(response)
         serializer = NBPResponseSerializer(data=data)
         if serializer.is_valid():
             currency2_value = serializer.data['rates'][0]['mid']
@@ -44,7 +45,7 @@ class CalculateViewAPI(APIView):
 
     def change_currency_to_pln(self, currency1_code, currency1_amount):
         response = requests.get(NBP_COURSE_URL + currency1_code, params={"format": 'json'}).content
-        data = self.process_data_from_response(response)
+        data = process_data_from_response(response)
         serializer = NBPResponseSerializer(data=data)
         if serializer.is_valid():
             currency1_value = serializer.data['rates'][0]['mid']
@@ -57,9 +58,9 @@ class CalculateViewAPI(APIView):
     def change_currency_to_currency(self, currency1_code, currency2_code, currency1_amount):
         payload = {"format": 'json'}
         response_1 = requests.get(NBP_COURSE_URL + currency1_code, params=payload).content
-        data_1 = self.process_data_from_response(response_1)
+        data_1 = process_data_from_response(response_1)
         response_2 = requests.get(NBP_COURSE_URL + currency2_code, params=payload).content
-        data_2 = self.process_data_from_response(response_2)
+        data_2 = process_data_from_response(response_2)
         serializer_1 = NBPResponseSerializer(data=data_1)
         serializer_2 = NBPResponseSerializer(data=data_2)
 
@@ -98,6 +99,31 @@ class CalculateViewAPI(APIView):
 
 class PlotViewAPI(APIView):
 
+    def create_serializer_object(self, response):
+        data = process_data_from_response(response)
+        serializer = NBPResponseSerializer(data=data)
+        return serializer
+
+    def get_values_to_create_plot(self, serializer, currency):
+        x_range = [objects['effectiveDate'] for objects in serializer.data['rates']]
+        y_range = [objects['mid'] for objects in serializer.data['rates']]
+        plot = get_plot(x_range, y_range, currency.upper())
+        return plot
+
+
+
     def post(self, request):
-        pass
+        data = request.data
+        points = data.get('points')
+        currency_code = data.get('currency_code')
+        url = f"{NBP_COURSE_URL}{currency_code}/last/{points}/"
+        response = requests.get(url, params={'format': 'json'}).content
+        serializer = self.create_serializer_object(response)
+        if serializer.is_valid():
+            plot = self.get_values_to_create_plot(serializer, currency_code)
+            response = {'plot':plot}
+            return Response(response)
+
+
+
 

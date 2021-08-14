@@ -11,3 +11,8 @@ class NBPResponseSerializer(serializers.Serializer):
     currency = serializers.CharField(max_length=30)
     code = serializers.CharField(max_length=3)
     rates = serializers.ListField()
+
+
+class PlotSerializer(serializers.Serializer):
+    code = serializers.CharField(max_length=3)
+    points = serializers.IntegerField()
