@@ -3,8 +3,7 @@ import base64
 from io import BytesIO
 
 
-
-def get_graph():
+def get_graph() -> str:
     buffer = BytesIO()
     plt.savefig(buffer, format='png')
     buffer.seek(0)
@@ -14,11 +13,11 @@ def get_graph():
     buffer.close()
     return graph
 
-def get_plot(x_range, y_range, currency_code):
+
+def get_plot(x_range, y_range, currency_code) -> str:
     plt.switch_backend('AGG')
     plt.title(f'{currency_code} course')
     plt.ylabel('Value')
-
     plt.plot(x_range, y_range)
     plt.xticks(rotation=90)
     plt.xlabel('Date')

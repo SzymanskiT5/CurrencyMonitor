@@ -1,24 +1,22 @@
 {% extends 'currency_exchange/layout.html' %}
-{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
 {% block head %}
-{% load static %}
+
+    {% load static %}
     <link rel="stylesheet" href="{% static 'currency_monitor/css/plot.css' %}">
-          <script src="{% static "currency_monitor/js/plot.js" %}"></script>
+    <script src="{% static "currency_monitor/js/plot.js" %}"></script>
 
 {% endblock %}
 
 {% block content %}
+
     {% if plot %}
         <img src="data:image/png;base64, {{ plot|safe }}" class="center" alt="plot" id="plot">
     {% endif %}
 
-     <form method="post">
-    {% csrf_token %}
-         {{ form|crispy }}
-
-
-     </form>
-
-
+    <form class="form-horizontal">
+        {% csrf_token %}
+        {{ form|crispy }}
+    </form>
 
 {% endblock %}
