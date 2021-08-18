@@ -2,15 +2,15 @@
 function sendRequest() {
     let points = document.getElementById("id_points").value;
     let url = window.location.href
-    var lastPart = url.split("/")
-    var currency_code = lastPart[lastPart.length - 2]
+    let lastPart = url.split("/")
+    let currency_code = lastPart[lastPart.length - 2]
 
 
-    var obj = new Object()
+    let obj = new Object()
     obj.currency_code = currency_code;
     obj.points = points;
-    var csrftoken = readCookie('csrftoken');
-    var string = JSON.stringify(obj);
+    let csrftoken = readCookie('csrftoken');
+    let string = JSON.stringify(obj);
 
 
     fetch(`${window.origin}/rest/currency-plot/`, {

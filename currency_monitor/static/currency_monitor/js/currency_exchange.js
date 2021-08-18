@@ -5,13 +5,13 @@ function sendRequest() {
     if (currency1_amount !== "") {
 
 
-        var obj = new Object()
+        let obj = new Object()
         obj.currency1_amount = currency1_amount;
         obj.currency1_code = currency1_code;
         obj.currency2_code = currency2_code;
 
-        var csrftoken = readCookie('csrftoken');
-        var string = JSON.stringify(obj);
+        let csrftoken = readCookie('csrftoken');
+        let string = JSON.stringify(obj);
 
 
         fetch(`${window.origin}/rest/currency-calculator/`, {
